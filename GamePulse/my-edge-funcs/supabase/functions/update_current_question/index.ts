@@ -15,30 +15,37 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 const questions = [
   { 
     time: 0, 
-    Question: "Question 1", 
-    Tip: "Remember to check your units", 
-    Answer: "Yes",
-    Choices: ["Yes", "No"]
-  },
-  { 
-    time: 10, 
-    Question: "Question 2", 
-    Tip: "Think about the edge cases", 
-    Answer: "Yes",
-    Choices: ["Yes", "No"]
-  },
-  { 
-    time: 25, 
-    Question: "Question 3", 
-    Tip: "Draw a diagram", 
+    Question: "If the next play is a pass, is the next pass going to be complete?", 
+    Tip: "So far in this game, Brady has completed 43 of 62 pass attempts for a pass percantage of 69.4%", 
     Answer: "No",
     Choices: ["Yes", "No"]
   },
   { 
-    time: 120, 
-    Question: "Question 4", 
-    Tip: "Break it down into steps", 
-    Answer: "Maybe",
+    time: 40, 
+    Question: "Are the Patriots going to score this drive?", 
+    Tip: "The Patriots have scored on 3 drives of their last 12 offensive drives (25%)", 
+    Answer: "Yes",
+    Choices: ["Yes", "No"]
+  },
+  { 
+    time: 67, 
+    Question: "Will there be a flag on the next play?", 
+    Tip: "At the end of a game, defenders are more likely to commit penalties resulting in a flag.", 
+    Answer: "No",
+    Choices: ["Yes", "No"]
+  },
+  { 
+    time: 105, 
+    Question: "Is Brady going to rush on the next play?", 
+    Tip: "Brady is rarely known to be a popular rushing quarterback.", 
+    Answer: "No",
+    Choices: ["Yes", "No"]
+  },
+  { 
+    time: 123, 
+    Question: "Is Brady going to celebrate for winning the Super Bowl?", 
+    Tip: "Winning the Super Bowl is a big deal!", 
+    Answer: "No",
     Choices: ["Yes", "No"]
   },
 ];

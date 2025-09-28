@@ -17,9 +17,9 @@ from selenium.webdriver.support import expected_conditions as EC
 # Config
 # -----------------------------
 youtube_url = "https://youtu.be/QRJ6JJtHZsQ"
-game_code = "EERT32"
+game_code = "794PWQ"
 request_interval = 2          # seconds between API calls
-keep_alive_interval = 30       # seconds between simulated interactions
+keep_alive_interval = 30      # seconds between simulated interactions
 
 function_url = "https://xtyufkrsudoktgxyharf.supabase.co/functions/v1/hello"
 update_question_url = "https://xtyufkrsudoktgxyharf.supabase.co/functions/v1/update_current_question"
@@ -34,7 +34,6 @@ headers = {
 payload = {"gameCode": game_code}
 isFinishedPayloadFalse = {"gameCode": game_code, "isFinished": False}
 isFinishedPayloadTrue = {"gameCode": game_code, "isFinished": True}
-
 
 
 # -----------------------------
@@ -109,8 +108,7 @@ def send_requests_loop(driver):
             # --- Check video end ---
             if video_has_ended(driver):
                 print("🎬 Video has ended!")
-                response = requests.post(finished_url, headers=headers, json=isFinishedPayloadTrue, timeout=10)
-
+                requests.post(finished_url, headers=headers, json=isFinishedPayloadTrue, timeout=10)
                 break
 
             # --- Keep alive ---
@@ -152,15 +150,22 @@ def main():
             play_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "ytp-play-button")))
             play_button.click()
             print("▶ Video started")
+
+            # Enter fullscreen automatically
+            try:
+                fullscreen_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "ytp-fullscreen-button")))
+                fullscreen_button.click()
+                print("⛶ Fullscreen enabled")
+            except Exception as e:
+                print("Could not enter fullscreen:", e)
+
         except Exception as e:
             print("Could not find/play video:", e)
 
         # Initial API request
         try:
-            
-            response = requests.post(function_url, headers=headers, json=payload, timeout=10)
+            requests.post(function_url, headers=headers, json=payload, timeout=10)
             response = requests.post(finished_url, headers=headers, json=isFinishedPayloadFalse, timeout=10)
-
             print("Initial request:", response.status_code, response.text)
         except Exception as e:
             print("Initial API request failed:", e)

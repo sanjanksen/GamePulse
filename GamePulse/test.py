@@ -1,41 +1,27 @@
 import requests
 import json
-import threading  # <- this was missing
+import os
 
-# Your deployed Edge Function URL
-FUNCTION_URL = "https://xtyufkrsudoktgxyharf.supabase.co/functions/v1/hello"
-FUNCTION_URL2 = "https://xtyufkrsudoktgxyharf.supabase.co/functions/v1/update_current_question"
+# URL of your deployed Supabase Edge Function
+FUNCTION_URL = "https://xtyufkrsudoktgxyharf.supabase.co/functions/v1/update_finished"
 
-# The game code you want to send
+
+# The game code you want to update
 payload = {
-    "gameCode": "FGR736"
+    "gameCode": "8RFTMB",
+    "isFinished": False  # Change to False if you want to mark it unfinished
+
 }
 
-# Make the POST request with the Supabase Service Role key
+# Headers including the Service Role Key
 headers = {
     "Content-Type": "application/json",
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0eXVma3JzdWRva3RneHloYXJmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1ODk0NDExNCwiZXhwIjoyMDc0NTIwMTE0fQ.nfM55AufUJkDernamKuRabkquGi1yGlOatUgLjAAsLo"
 }
 
-response = requests.post(
-    FUNCTION_URL,
-    headers=headers,
-    data=json.dumps(payload)
-)
+# Send the POST request
+response = requests.post(FUNCTION_URL, json=payload, headers=headers)
 
-print(response.status_code)
-print(response.json())
-
-def send_request():
-    response = requests.post(FUNCTION_URL2, headers=headers, data=json.dumps(payload))
-    print("Status code:", response.status_code)
-    try:
-        print("Response:", response.json())
-    except json.JSONDecodeError:
-        print("Non-JSON response:", response.text)
-
-    # Schedule the function to run again in 5 seconds
-    threading.Timer(5, send_request).start()
-
-send_request()
-
+# Print the response
+print("Status code:", response.status_code)
+print("Response JSON:", response.json())
